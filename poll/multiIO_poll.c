@@ -1,4 +1,4 @@
-#include <unisted.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 
 	while(1)
 	{
-		memset(buf, 0x00, BUF_SiZE);
+		memset(buf, 0x00, BUF_SIZE);
 		ret = poll(fdarr, FD_SIZE , -1);
 
 		if (ret == -1)
@@ -41,8 +41,8 @@ int main(int argc, char *argv[]){
 
 		for(i = 0; i < FD_SIZE; i++)
 		{
-			if(fdarr[i].fd != -1 && fdarr[i].revent & POLLIN){
-				while((n = read(fdarr[i].fd, buf, BUFSIZE)) >0) {
+			if(fdarr[i].fd != -1 && fdarr[i].revents & POLLIN){
+				while((n = read(fdarr[i].fd, buf, BUF_SIZE)) >0) {
 					if (!strcmp(buf, "quit\n"))
 					{
 						close(fdarr[i].fd);
