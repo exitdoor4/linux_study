@@ -6,13 +6,13 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#define FD_SIZE 3
+#define FILED_SIZE 3
 #define BUF_SIZE 8
 
 int main(int argc, char *argv[])
 {
 	int i, n , ret, fd_count, end_count = 0;
-	int fds(FD_SIZE);
+	int fds[FILED_SIZE];
 	char buf[BUF_SIZE] = {0,};
 	struct timeval tv;
 
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
 	FD_ZERO(&readfds);
 
-	for(i=0; i< FD_SIZE; i++)
+	for(i=0; i< FILED_SIZE; i++)
 	{
 		fds[i] = open(argv[i+1], O_RDONLY);
 		if(fds[i] >=0)
@@ -48,11 +48,11 @@ int main(int argc, char *argv[])
 			exit(0);
 		}
 
-		for(i=0; i<FD_SIZE; i++)
+		for(i=0; i<FILED_SIZE; i++)
 		{
 			if(FD_ISSET(fds[i], &retfds))
 			{
-				while(n=read(fds[i], buf, BUF_SIZE)) > 0
+				while(n=read(fds[i], buf, BUF_SIZE) > 0)
 				{
 					if(!strcmp(buf, "quit\n"))
 					{
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 						close(fds[i]);
 						end_count++;
 
-						if(end_count == FD_SIZE)
+						if(end_count == FILED_SIZE)
 							exit(0);
 						continue;
 					}
