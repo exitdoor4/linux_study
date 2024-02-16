@@ -32,7 +32,7 @@ static ssize_t davidex_read(struct file *filp, char __user *buf, size_t count, l
 	int copylen = count;
 
 	if(!buf) return -1;
-	if(!count<=0) return -1;
+	if(count<=0) return -1;
 
 	if(copylen > data_len)
 		copylen = data_len;
@@ -73,7 +73,7 @@ static int davidex_release(struct inode *inode, struct file *filp)
 	return 0;
 }
 
-static sturct file_operations davidex_fops=
+static struct file_operations davidex_fops=
 {
 	.owner=THIS_MODULE,
 	.open=davidex_open,
@@ -84,11 +84,11 @@ static sturct file_operations davidex_fops=
 
 static int davidex_init(void)
 {
-	davidex_major=register_chrdev(0,devidex_dev_name, &davidex_fops);
+	davidex_major=register_chrdev(0,davidex_dev_name, &davidex_fops);
 
 	if(davidex_major>=0)
 	{
-		printk("register device %s Sucess (major=%d)\n", davidex_dev_name, devidex_major);
+		printk("register device %s Sucess (major=%d)\n", davidex_dev_name, davidex_major);
 	}
 	else
 	{
@@ -100,7 +100,7 @@ static int davidex_init(void)
 
 static void davidex_exit(void)
 {
-	unregister_chrdev(davidex_major, devidex_dev_name);
+	unregister_chrdev(davidex_major, davidex_dev_name);
 }
 
 module_init(davidex_init);

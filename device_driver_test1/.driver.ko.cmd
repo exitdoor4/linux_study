@@ -1,0 +1,1 @@
+cmd_/home/cizentech/linux_study/device_driver/driver.ko := aarch64-linux-gnu-ld -EL -r  -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds --build-id  -o /home/cizentech/linux_study/device_driver/driver.ko /home/cizentech/linux_study/device_driver/driver.o /home/cizentech/linux_study/device_driver/driver.mod.o ;  true
